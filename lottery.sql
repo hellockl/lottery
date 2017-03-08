@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2017-03-08 18:01:15
+Date: 2017-03-08 18:59:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,7 +31,7 @@ CREATE TABLE `n_admin_auth_group` (
 -- ----------------------------
 -- Records of n_admin_auth_group
 -- ----------------------------
-INSERT INTO `n_admin_auth_group` VALUES ('27', '超级管理员', '1', '1', '2,37,39,41,43,44,14,21,24,25,26,27,22,28,29,30,31,23,32,33,34,35,61,62');
+INSERT INTO `n_admin_auth_group` VALUES ('27', '超级管理员', '1', '1', '2,37,39,41,43,44,14,21,24,25,26,27,22,28,29,30,31,23,32,33,34,35,61,62,63,64');
 INSERT INTO `n_admin_auth_group` VALUES ('28', '编辑', '1', '1', '14,23,32,33');
 
 -- ----------------------------
@@ -68,7 +68,7 @@ CREATE TABLE `n_admin_auth_rule` (
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `condition` char(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of n_admin_auth_rule
@@ -108,8 +108,10 @@ INSERT INTO `n_admin_auth_rule` VALUES ('37', '&amp;#xe62a;', 'News/Index', '公
 INSERT INTO `n_admin_auth_rule` VALUES ('62', '&amp;#xe600;', 'Lottery/index', '大转盘', '61', '1', '1', '1', '1', '');
 INSERT INTO `n_admin_auth_rule` VALUES ('39', '&amp;#xe61f;', 'News/addNews', '新增资讯', '37', '2', '1', '1', '1', '');
 INSERT INTO `n_admin_auth_rule` VALUES ('41', 'asdf', 'News/uploadImgForContent', '富文本图片上传', '37', '2', '1', '1', '1', '');
+INSERT INTO `n_admin_auth_rule` VALUES ('63', 'a', 'Lottery/winningList', '中奖列表', '62', '2', '1', '1', '1', '');
 INSERT INTO `n_admin_auth_rule` VALUES ('43', 'dd', 'News/editNews', '编辑资讯', '37', '2', '1', '1', '1', '');
 INSERT INTO `n_admin_auth_rule` VALUES ('44', 'dd', 'News/deleteNews', '删除资讯', '37', '2', '1', '1', '1', '');
+INSERT INTO `n_admin_auth_rule` VALUES ('64', 'b', 'Lottery/addPrize', '添加奖品', '62', '2', '1', '1', '1', '');
 
 -- ----------------------------
 -- Table structure for n_admin_user
@@ -128,7 +130,7 @@ CREATE TABLE `n_admin_user` (
 -- Records of n_admin_user
 -- ----------------------------
 INSERT INTO `n_admin_user` VALUES ('11', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1480572245', '2');
-INSERT INTO `n_admin_user` VALUES ('15', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1488960549', '1');
+INSERT INTO `n_admin_user` VALUES ('15', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '1488968272', '1');
 INSERT INTO `n_admin_user` VALUES ('16', 'test', '098f6bcd4621d373cade4e832627b4f6', '1480667348', '1');
 INSERT INTO `n_admin_user` VALUES ('17', 'wuyawnen', '90b18287d7aab11bb2caee3e0c39fd08', '1480668214', '1');
 
@@ -168,10 +170,30 @@ CREATE TABLE `n_prize` (
   `status` smallint(3) DEFAULT '0' COMMENT '0：上架；1：下驾',
   `level` smallint(3) DEFAULT '0' COMMENT '奖品等级',
   `chance` float(10,2) DEFAULT NULL COMMENT '中奖率',
+  `pre_win` varchar(255) DEFAULT NULL COMMENT '必中手机号',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of n_prize
 -- ----------------------------
-INSERT INTO `n_prize` VALUES ('1', 'IPHONE', '', '', '1', '0', null, null);
+INSERT INTO `n_prize` VALUES ('1', 'IPHONE', '', '', '1', '0', null, null, null);
+
+-- ----------------------------
+-- Table structure for n_winning_list
+-- ----------------------------
+DROP TABLE IF EXISTS `n_winning_list`;
+CREATE TABLE `n_winning_list` (
+  `id` int(12) NOT NULL AUTO_INCREMENT,
+  `prize_id` int(12) DEFAULT NULL COMMENT '奖品ID',
+  `phone` varchar(11) DEFAULT NULL COMMENT '中奖人手机号',
+  `openid` varchar(64) DEFAULT NULL COMMENT '微信openid',
+  `create_time` varchar(11) DEFAULT NULL COMMENT '中奖时间',
+  `status` mediumint(3) DEFAULT NULL COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of n_winning_list
+-- ----------------------------
+INSERT INTO `n_winning_list` VALUES ('1', '1', '18701881920', null, null, '0');

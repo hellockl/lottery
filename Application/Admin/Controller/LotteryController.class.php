@@ -19,7 +19,6 @@ class LotteryController extends CommonController{
      * @author ckl
      */
     public function index(){
-
         $prize_list = $this->prize_model->selectAllPrize(10);
         $this->assign('prize_list',$prize_list['list']);
         $this->assign('page',$prize_list['page']);
@@ -101,12 +100,13 @@ class LotteryController extends CommonController{
     /**
      * @description  大转盘-中奖列表
      * @author ckl
-     * 
+     *
      */
     public function winningList(){
         $winning_list  = $this->prize_model->getAllWinningList();
         $this->assign('winning_list',$winning_list['list']);
         $this->assign('page',$winning_list['page']);
+
         $this->display();
     }
 
