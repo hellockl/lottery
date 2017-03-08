@@ -70,7 +70,23 @@ class PrizeModel extends BaseModel
         
         return $this->where($where)->save($data);
     }
-    
+
+    /**
+     * @description 得到中奖列表
+     * @auther
+     *
+     */
+    public function getAllWinningList($num){
+        $where = array(
+            'status' => 0,
+        );
+        $count      = M("WinningList")->where($where)->count();
+        $page       = new \Think\Page($count,$num);
+        $show       = $page->show();
+        $list       = M("WinningList")->where($where)->limit($page->firstRow.','.$page->listRows)->select();
+
+        return array('page' => $show , 'list' => $list);
+    }
     
 
 }

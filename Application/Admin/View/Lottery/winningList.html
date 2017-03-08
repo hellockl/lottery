@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Table</title>
+		<link rel="stylesheet" href="__PUBLIC__/plugins/layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="__PUBLIC__/css/global.css" media="all">
+		<link rel="stylesheet" href="__PUBLIC__/plugins/font-awesome/css/font-awesome.min.css">
+	</head>
+
+	<body>
+		<div class="admin-main">
+		
+			<blockquote class="layui-elem-quote">
+				<button  class="layui-btn layui-btn-small goback">
+					<i class="layui-icon">&#xe608;</i> 返回
+				</button>
+				<button  class="layui-btn layui-btn-small download">
+					<i class="layui-icon">&#xe608;</i> 导出Excel
+				</button>
+
+			</blockquote>
+			<fieldset class="layui-elem-field">
+				<legend>中奖列表</legend>
+				<div class="layui-field-box">
+				<table class="layui-table">
+					  <thead>
+					    <tr>
+					      <th>#</th>
+					      <th>手机号</th>
+					      <th>奖品名</th>
+						  <th>状态</th>
+						  <th>操作</th>
+					    </tr> 
+					  </thead>
+					  <tbody>
+					  <foreach name="winning_list" key="k" item="vo">
+					    <tr>
+					      <td>{$k+1}</td>
+					      <td>{$vo.phone}</td>
+					      <td>{$vo.pname}</td>
+						  <td>{$vo.status}</td>
+						  <td>
+							<a data="{$vo.id}" class="layui-btn layui-btn-mini layui-btn-normal edit"><i class="layui-icon">&#xe642;</i>编辑</a>
+							<a  data="{$vo.id}" class="layui-btn layui-btn-danger layui-btn-mini del"><i class="layui-icon">&#xe640;</i>删除</a>
+
+					      </td>
+					    </tr>
+					    </foreach>
+					  </tbody>
+				</table>
+			
+				</div>
+				{$page}
+			</fieldset>
+			<div class="admin-table-page">
+				<div id="page" class="page">
+
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="__PUBLIC__/plugins/layui/layui.js"></script>
+		<script>
+			layui.use(['laypage','upload','layer','form'], function() {
+				//var laypage = layui.laypage,
+				$ = layui.jquery
+				//请求表单
+				$('.goback').click(function(){
+					history.go(-1);
+				});
+
+
+
+			});
+		</script>
+	</body>
+
+</html>

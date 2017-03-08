@@ -4,6 +4,7 @@ namespace Admin\Controller;
 class LotteryController extends CommonController{
 
     protected   $prize_model;
+    protected   $winning_list_model;
 
     public function __construct(){
         parent::__construct();
@@ -95,7 +96,19 @@ class LotteryController extends CommonController{
         }else{
             $this->display();
         }
-
     }
+
+    /**
+     * @description  大转盘-中奖列表
+     * @author ckl
+     * 
+     */
+    public function winningList(){
+        $winning_list  = $this->prize_model->getAllWinningList();
+        $this->assign('winning_list',$winning_list['list']);
+        $this->assign('page',$winning_list['page']);
+        $this->display();
+    }
+
 
 }
