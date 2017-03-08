@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * 频次，每5分钟调一次
+ * 频次，每5分钟调一次ss
  */
 ini_set("display_errors","on");
 error_reporting(7);
