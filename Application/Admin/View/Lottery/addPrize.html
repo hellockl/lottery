@@ -14,17 +14,35 @@
 
 	</div>
 	<div class="layui-form-item">
+		<label class="layui-form-label">奖品等级</label>
+		<div class="layui-input-inline">
+			<select style="display: block" name="level" lay-filter="aihao">
+				<option value="0">特等奖</option>
+				<option value="1">一等奖</option>
+				<option value="2">二等奖</option>
+				<option value="3">三等奖</option>
+				<option value="4">四等奖</option>
+			</select>
+		</div>
+	</div>
+	<div class="layui-form-item">
 		<label class="layui-form-label">中奖概率</label>
 		<div class="layui-input-inline">
-			<input type="text" name="chance"  placeholder="请输入中奖概率" autocomplete="off" class="layui-input">
+			<input type="text" name="chance"  placeholder="请输入中奖概率" autocomplete="off" class="layui-input">1~10000
 		</div>
-
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">必中手机号</label>
+		<div class="layui-input-inline">
+			<input type="text" name="pre_win"  placeholder="请输入必中手机号" autocomplete="off" class="layui-input">
+			多个请用" , "隔开
+		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">上传图片</label>
 		<div class="layui-input-inline">
 			<input type="file" name="file" class="layui-upload-file">
-			<input type="hidden" name="banner_img" id="image_path" value=""/>
+			<input type="hidden" name="pimg" id="image_path" value=""/>
 			<img id="img_upload" src="#" style="width: 200px;height: 100px;">
 		</div>
 	</div>

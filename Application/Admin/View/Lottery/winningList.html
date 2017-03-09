@@ -40,10 +40,9 @@
 					      <td>{$k+1}</td>
 					      <td>{$vo.phone}</td>
 					      <td>{$vo.pname}</td>
-						  <td>{$vo.status}</td>
+						  <td>{$vo.status_name}</td>
 						  <td>
-							<a data="{$vo.id}" class="layui-btn layui-btn-mini layui-btn-normal edit"><i class="layui-icon">&#xe642;</i>编辑</a>
-							<a  data="{$vo.id}" class="layui-btn layui-btn-danger layui-btn-mini del"><i class="layui-icon">&#xe640;</i>删除</a>
+							<a data="{$vo.id}" <eq name="vo.status" value="0">class="layui-btn layui-btn-mini activate"<else/>class="layui-btn layui-btn-mini layui-btn-disabled"</eq> ><i class="layui-icon">&#xe642;</i>确认领取</a>
 
 					      </td>
 					    </tr>
@@ -62,13 +61,34 @@
 		</div>
 		<script type="text/javascript" src="__PUBLIC__/plugins/layui/layui.js"></script>
 		<script>
-			layui.use(['laypage','upload','layer','form'], function() {
-				//var laypage = layui.laypage,
-				$ = layui.jquery
-				//请求表单
-				$('.goback').click(function(){
-					history.go(-1);
-				});
+			layui.use(['laypage','layer','form'], function() {
+				var laypage = layui.laypage,
+						$ = layui.jquery
+
+				//禁用会员
+				$('.activate').click(function(){
+					var id = $(this).attr('data');
+					var url = "{:U('Lottery/confirmPrize')}";
+					layer.confirm('您确定该用户已领到奖了?', {
+						icon: 3,
+						skin: 'layer-ext-moon',
+						btn: ['确认','取消'] //按钮
+					}, function(){
+						$.post(url,{id:id},function(data){
+							if(data.status == 'error'){
+								layer.msg(data.msg,{icon: 5});//失败的表情
+								return;
+							}else{
+								layer.msg(data.msg, {
+									icon: 6,//成功的表情
+									time: 2000 //2秒关闭（如果不配置，默认是3秒）
+								}, function(){
+									location.reload();
+								});
+							}
+						})
+					});
+				})
 
 
 

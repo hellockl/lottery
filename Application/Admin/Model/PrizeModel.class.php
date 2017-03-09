@@ -52,6 +52,15 @@ class PrizeModel extends BaseModel
         
         return $this->where($where)->save($data);
     }
+
+    public function findPrizeById($prize_id){
+        $where = array(
+            'id' => $prize_id,
+        );
+
+
+        return $this->where($where)->find();
+    }
     
     /**
      * @description:删除奖品
@@ -78,15 +87,16 @@ class PrizeModel extends BaseModel
      */
     public function getAllWinningList($num){
         $where = array(
-            'status' => 0,
+            'W.status' => 0,
         );
-        $count      = M("WinningList")->where($where)->count();
+        $count      = M("WinningList")->alias("W")->where($where)->count();
         $page       = new \Think\Page($count,$num);
         $show       = $page->show();
-        $list       = M("WinningList")->where($where)->limit($page->firstRow.','.$page->listRows)->select();
+        $list       = M("WinningList")->field("W.*,P.pname")->alias('W')->join("LEFT JOIN ".C('DB_PREFIX')."prize P on(W.prize_id=P.id)")->where($where)->limit($page->firstRow.','.$page->listRows)->select();
 
         return array('page' => $show , 'list' => $list);
     }
-    
+
+
 
 }

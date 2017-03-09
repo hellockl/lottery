@@ -62,7 +62,7 @@ class LotteryController extends CommonController{
             }
         }else{
             $id = I('get.id',0,'intval');
-            $prize_info = $this->prize_model->findPriceById($id);
+            $prize_info = $this->prize_model->findPrizeById($id);
             $this->assign("prize_info",$prize_info);
             $this->display();
         }
@@ -103,11 +103,34 @@ class LotteryController extends CommonController{
      *
      */
     public function winningList(){
-        $winning_list  = $this->prize_model->getAllWinningList();
+        $winning_list  = $this->prize_model->getAllWinningList(10);
+        foreach($winning_list['list'] as $key=>$val){
+            if($val['status']==0){
+                $winning_list['list'][$key]['status_name'] = '未领取';
+            }else{
+                $winning_list['list'][$key]['status_name'] = '已领取';
+            }
+        }
+
         $this->assign('winning_list',$winning_list['list']);
         $this->assign('page',$winning_list['page']);
 
         $this->display();
+    }
+
+    /**
+     *
+     *
+     */
+    public function confirmPrize(){
+        $id = I("POST.id",0,'intval');
+        $where['id']= $id;
+        $res = M("WinningList")->where($where)->setField('status',1);
+        if($res){
+            $this->ajaxSuccess('操作成功');
+        }else{
+            $this->ajaxError('操作失败');
+        }
     }
 
 
